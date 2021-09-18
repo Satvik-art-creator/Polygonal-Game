@@ -14,9 +14,7 @@ var block17, block18, block19, block20, block21, block22, block23, block24, bloc
 
 var polygon, slingshot;
 
-var score = 0;
-
-var backgroundImg, bg;
+var score = 0, chance=7;
 
 function setup() {
   createCanvas(1200,600);
@@ -73,14 +71,23 @@ function setup() {
 }
 
 function draw() {
-  background(0);  
+  background(0);
   Engine.update(engine);
 
   textSize(20);
   fill("white");
   text("Drag the Polygon to Destroy the Blocks",350,50);
-  text("Press Space to get a second Chance to Play!!",700,500);
+  text("Your Chance Left : "+chance,350,80);
   text("Score : "+score,150,50);
+
+  if(chance == 0){
+    textSize(30);
+    text("GAME OVER",500,250);
+    polygon.hide();
+    slingshot.hide();
+  } else{
+    text("Press Space to get a second Chance to Play!!",700,500);
+  }
 
   base.display();
   stand1.display();
@@ -173,6 +180,12 @@ function mouseReleased(){
 
 function keyPressed(){
   if(keyCode === 32){
+    if(chance == 0){
+      return;
+    } else{
       slingshot.attach(polygon.body);
+      chance--;
+    }  
+      
   }
 }

@@ -18,10 +18,6 @@ var score = 0;
 
 var backgroundImg, bg;
 
-function preload(){
-  getTime();
-}
-
 function setup() {
   createCanvas(1200,600);
 

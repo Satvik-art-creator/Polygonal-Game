@@ -16,6 +16,10 @@ var polygon, slingshot;
 
 var score = 0, chance=7;
 
+var gameState = "play";
+
+localStorage["HighestScore"] = 0;
+
 function setup() {
   createCanvas(1200,600);
 
@@ -78,15 +82,27 @@ function draw() {
   fill("white");
   text("Drag the Polygon to Destroy the Blocks",350,50);
   text("Your Chance Left : "+chance,350,80);
-  text("Score : "+score,150,50);
+  text("Score : "+score,230,50);
+
+  if (localStorage["HighestScore"] < score) {
+    localStorage["HighestScore"] = score;
+  }
+
+  text("High Score: " + localStorage["HighestScore"], 70, 50);
 
   if(chance == 0){
+    gameState = "end";
     textSize(30);
     text("GAME OVER",500,250);
-    polygon.hide();
-    slingshot.hide();
+    text("Press 'R' key to Re-Play",440,175);
   } else{
     text("Press Space to get a second Chance to Play!!",700,500);
+  }
+
+  if(gameState === "end" && keyDown("r")){
+    score = 0;
+    chance = 7;
+    gameState = "play";
   }
 
   base.display();
